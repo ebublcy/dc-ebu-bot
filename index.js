@@ -15,13 +15,11 @@ var prefix = settings.prefix;
 
 client.on('ready', () => {
 
-  let status = 1;
-
   console.log(` << ${client.user.tag} Online>>`)
 
   // random status change
   function randomStatus() {
-    let status = ["Snowball with Diana", "Snowball with Erica", "Snowball with Enzo"] // add more texts
+    let status = ["Snowball with Diana", "Snowball with Erica", "Snowball with Enzo"] // you can add more texts
     let rstatus = Math.floor(Math.random() * status.length);
 
     client.user.setActivity(status[rstatus], { type: "PLAYING" }) // PLAYING / WATCHING / LISTENING / STREAMING
@@ -36,29 +34,9 @@ client.on('message', msg => {
 
   const args = msg.content.split(' ');
 
-  let dvrole = msg.guild.roles.cache.find(r => r.id === "795721613726580798");
-
-  //maintedance system
-  if (msg.content.startsWith(prefix + 'setstatus')) {
-    if (msg.member.roles.cache.has(dvrole)) {
-      if (args[1] === '0') {
-        var status = 0;
-        msg.channel.send("The bot is in maintenance mode.")
-      }
-      if (args[1] === '1') {
-        var status = 1;
-        msg.channel.send("The bot is out of maintenance mode.")
-      }
-      if (args[1] != '1' || args[1] != '0') {
-        msg.channel.send("Correct usage -> .setstatus 1 / 0");
-      }
-    }
-    else {
-      msg.channel.send("❌ You do not have the necessary permissions to use this command!");
-    }
-  }
-
-  //---Information Commands---//////////////////////////////////////////////////////////////////
+  //---Informational Commands---//
+  
+  // Example embed messages
   if (msg.content.toLowerCase() === prefix + 'team') {
     msg.channel.send(new Discord.MessageEmbed()
       .setTitle("**Name Team**")
@@ -82,7 +60,7 @@ client.on('message', msg => {
       .setColor("RANDOM")
       .addField("Information", "Prefix -> . (dot) || .status")
       .addField("Useful Commands", ".team | .m [message]")
-      .addField("Fun Commands", ".dont cry | .hüü | hadi bb | .geldim | haha | .pu | kim bu yarrak | kaç cm | kalktı | bırakın lan beni | .garı | hareketlere bak | hoşgeldin / hoşgeldiniz")
+      .addField("Funny Commands", ".dont cry | .hüü | hadi bb | .geldim | haha | .pu | kim bu yarrak | kaç cm | kalktı | bırakın lan beni | .garı | hareketlere bak | hoşgeldin / hoşgeldiniz")
       .setImage("https://cdn.discordapp.com/attachments/792703124417937409/795275696648749086/Screenshot_522.png")
       .setTimestamp()
       .setFooter("Name Team ❤ Author"));
@@ -100,13 +78,14 @@ client.on('message', msg => {
       .setFooter("Name Team ❤ Author"));
   }
 
+  //
   if (msg.content === 'prefix') {
     msg.reply('My prefix: "(.) (dot)"');
   }
 
+  // bots status embed
   if (msg.content === prefix + 'status') {
-
-    if (status === 1) {
+    
       msg.channel.send(new Discord.MessageEmbed()
         .setTitle("**Status**")
         .setThumbnail("https://i.hizliresim.com/cYAIw4.png")
@@ -117,18 +96,9 @@ client.on('message', msg => {
         .setFooter("Name Team ❤ Author"));
     }
 
-    else if (status === 0) {
-      msg.channel.send(new Discord.MessageEmbed()
-        .setTitle("**Status**")
-        .setThumbnail("https://i.hizliresim.com/cYAIw4.png")
-        .setColor("RANDOM")
-        .addField("Bot service is not active. The services are taken into care for a short time.", "⛔")
-        .setTimestamp()
-        .setFooter("Name Team ❤ Author"));
-    }
-  }
-
-  //--Useful Commands--/////////////////////////////////////////////////////////////
+  //--Useful Commands--//
+  
+  // hi
   if (msg.content.toLowerCase() === "hi") {
     msg.reply("hi, welcome ^^");
   }
@@ -159,26 +129,32 @@ client.on('message', msg => {
     }
   }
 
-  //--Fun Commands--///////////////////////////////////////////////////////////////////////////////////
+  //--Fun Commands--//
+  
+  //
   if (args[0] === 'shut' || args[0] === 'sht') {
     if (args[1] === 'up' || args[1] === 'p') {
       msg.channel.send('SHUT UP!');
     }
   }
 
+  //
   if (msg.content.toLowerCase() === prefix + 'dont cry' || msg.content.toLowerCase() === prefix + 'do not cry' || msg.content.toLowerCase() === prefix + "don't cry" || msg.content.toLowerCase() === prefix + "don' t cry") {
     msg.react('😢');
     msg.channel.send('https://tenor.com/view/dont-cry-dont-cry-cheer-dont-give-up-encourage-encouragement-gif-12458961');
   }
 
+  //
   if (args[0] === 'bye' || args[0] === 'bb') {
     msg.channel.send('Bye!');
   }
 
+  //
   if (msg.content.toLowerCase() === 'haha') {
     msg.channel.send('https://tenor.com/view/el-risitas-happy-laughing-gif-16530528');
   }
 
+  //
   if (msg.content.toLowerCase() === prefix + "pu") {
     msg.channel.send('PU!', {
       files: [
@@ -187,6 +163,7 @@ client.on('message', msg => {
     });
   }
 
+  //
   if (msg.content.toLowerCase() === "welcome" || msg.content.toLowerCase() === "wellcome") {
     msg.channel.send('welcome..', {
       files: [
